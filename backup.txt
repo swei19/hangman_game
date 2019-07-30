@@ -1,0 +1,10 @@
+Garfield 10
+Test1 4
+Test2 2
+Test7 2
+Test9 2
+Test3 1
+Test4 1
+Test8 1
+odie 1
+Test5 0

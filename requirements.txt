@@ -1,0 +1,16 @@
+Summary.txt - etc. describe hows its scored
+README.txt
+15 JUnits Tests
+Doesn't crash (including when interacting with the program, scores accurate, game ends when it ends)
+
+
+Things to D0
+1) Man being hanged - Replacing the image with each body part
+2) The tracking UI (Number of tries left, current score?, name of the player)
+
+3) Endgame, show highscore board
+4) How many tries user can click + revamp of scoring
+5) Re-doing Scoring
+
+6) Progression? 1 Easy -> 1 medium -> hard -> loop hard words
+7) Code Cleanup
