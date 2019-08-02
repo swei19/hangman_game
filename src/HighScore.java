@@ -1,3 +1,10 @@
+/**
+ * The class below is responsible for comparing and sorting scores to allow scores high
+ * enough to be entered into the highscore board
+ * @author Spencer
+ *
+ */
+
 public class HighScore implements Comparable<Object>{
 	private String playerName;
 	private int score;

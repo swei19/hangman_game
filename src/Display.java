@@ -1,15 +1,8 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
-
-import javax.swing.JLabel;
 
 /**
  * @author Calvin Chan, Denes Marton, Spencer Wei This class will be responsible
- *         for displaying any graphics of the
- *         game.
+ *         for displaying any graphics of the game.
  */
 
 public class Display {
@@ -29,27 +22,21 @@ public class Display {
 	 */
 
 	public String displayLetterAndEmptyWordUnderlines(ArrayList<String> guessedLetters) {
-		
+
 		String stringToPrint = "";
 		for (int i = 0; i < randomWordSelectedArr.length; i++) {
-			
+
 			if (guessedLetters.contains(randomWordSelectedArr[i])) {
 				stringToPrint += " " + randomWordSelectedArr[i] + " ";
 
 			} else {
 				stringToPrint += " _ ";
 
-			};
+			}
+			;
 		}
-		System.out.println(stringToPrint);
 		return stringToPrint;
-		
-		
+
 	}
-
-
-
-
-
 
 }

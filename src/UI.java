@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -9,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -27,14 +25,19 @@ public class UI {
 	final static int NUMBER_OF_WRONG_GUESSES_ALLOWED = 6;
 	private JFrame overallFrame;
 	private JPanel trackingPanel;
+    private static JPanel hangmanPanel;
+    private JLabel headerLabel;
 
-	private JLabel headerLabel;
+    
 	private ArrayList<String> guessedLetters = new ArrayList<String>();
-	private String playerName;
-
+	private String playerName = "";
 	private int numWrongGuesses = 0;
 	private static Hangman hm = new Hangman();
-	private static JPanel hangmanPanel;
+	
+	JLabel noCatChosenMsg = new JLabel("");
+	
+	private String categoryChosen = "";
+	private int currentScore;
 
 	public static void main(String[] args) {
 		UI ui = new UI();
@@ -43,21 +46,35 @@ public class UI {
 		hangmanPanel = hm.readImage(0, false);
 	}
 
-	private int currentScore;
-
-	public void initStartGameUI() {
-
+	public void newGame () {
+		//UI ui = new UI();
+		//initStartGameUI();
+		guessedLetters.clear();
+		numWrongGuesses = 0;
+		changeImage(false);
+		
+	}
+	
+	public void initStartGameUI(){
+		
 		overallFrame = new JFrame("Hangman");
-
 		overallFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		overallFrame.setSize(600, 500);
+		overallFrame.setSize(620, 520);
+
 		GridBagConstraints c = new GridBagConstraints();
 
 		JPanel startGamePanel = new JPanel();
+		
 		JTextField nameField = new JTextField("Please enter a name");
+		//nameField.setMinimumSize(new Dimension(100, 25));
+		
+		if (playerName != "") {
+			nameField.setText(playerName);
+		}
+		
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-
+		
 		startGamePanel.setLayout(gridBagLayout);
 
 		c.gridy = 1;
@@ -66,16 +83,23 @@ public class UI {
 		nameField.setMargin(new Insets(5, 5, 5, 5));
 
 		startGamePanel.add(nameField, c);
+		
+		c.gridy = 2;
+		c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(10, 0, 0, 0);
+		
+		startGamePanel.add(getModePanels(), c);
 
 		c.gridy = 0;
 
 		headerLabel = new JLabel("Hangman Game");
 		startGamePanel.add(headerLabel, c);
 
-		c.gridy = 2;
+		c.gridy = 3;
 		c.insets = new Insets(20, 0, 0, 0);
 		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.CENTER;
+		
 		JButton newGameButton = new JButton("New Game");
 		newGameButton.setMargin(new Insets(12, 12, 12, 12));
 
@@ -99,9 +123,23 @@ public class UI {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				newGame();
 				playerName = nameField.getText();
-				initMainUI();
-
+				if (categoryChosen != "") {
+					initMainUI();
+				} else {
+					
+					c.gridy = 4;
+					c.insets = new Insets(0, 0, 0, 0);
+					c.gridwidth = 1;
+					c.anchor = GridBagConstraints.SOUTH;
+					
+					if (noCatChosenMsg.getText() == "") {
+						noCatChosenMsg.setText("Please select a category first");
+						startGamePanel.add(noCatChosenMsg, c);
+						startGamePanel.revalidate();
+					}
+				}
 			}
 		});
 
@@ -113,17 +151,26 @@ public class UI {
 
 		overallFrame.setVisible(true);
 		overallFrame.requestFocusInWindow();
+
+		
 	}
 
 	public void initMainUI() {
-
-		GuessWord gw = new GuessWord("Animals");
+		GuessWord gw;
+		if (categoryChosen != "Competitive") {
+			 gw = new GuessWord(categoryChosen);
+		} else {
+			gw = new GuessWord("Animals");
+		}
+		
 
 		BorderLayout frameLayout = new BorderLayout();
 
 		String currentWord = gw.selectWord();
-		Score score = new Score(numWrongGuesses, currentWord.length());
-		currentScore = score.scoreGame();
+		// we may want to change the arguments of the Score class
+		//Score score = new Score(numWrongGuesses, currentWord.length());
+		//currentScore = score.scoreGame(currentWord, numWrongGuesses);
+		
 
 		Display display = new Display(currentWord);
 		Set<String> uniqueLettersOfCurrentWord = gw.getUniqueLettersOfSelectedWord();
@@ -138,17 +185,20 @@ public class UI {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		trackingPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
+		trackingPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 10));
 		JLabel nameDisplayLabel = new JLabel(playerName);
-		JLabel scoreTracking = new JLabel("Current Score: " + currentScore);
+		JLabel scoreTracking = new JLabel("Max Score: " + currentScore);
 		JLabel numTriesTracking = new JLabel("Wrong Guesses: " + numWrongGuesses);
 
 		trackingPanel.add(nameDisplayLabel);
 		trackingPanel.add(scoreTracking);
 		trackingPanel.add(numTriesTracking);
-
+		
+		
+		trackingPanel.add(newGamePanel());
 		overallFrame.add(trackingPanel, BorderLayout.NORTH);
 		overallFrame.add(hangmanPanel, BorderLayout.CENTER);
+		
 
 		JPanel buttonAndGuessWordPanel = new JPanel(new GridBagLayout());
 		JPanel topButtonsPanel = new JPanel(new SpringLayout());
@@ -169,6 +219,9 @@ public class UI {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					//Score updateScore = new Score(numWrongGuesses, currentWord.length());
+					//int updatedScore = updateScore.scoreGame(currentWord, numWrongGuesses);
+					
 					if (numWrongGuesses != NUMBER_OF_WRONG_GUESSES_ALLOWED) {
 						guessedLetters.add(currentButton.getText());
 						currentDisplay.setText(display.displayLetterAndEmptyWordUnderlines(guessedLetters));
@@ -178,10 +231,10 @@ public class UI {
 							changeImage(false);
 						}
 
-						Score updateScore = new Score(numWrongGuesses, currentWord.length());
-						int updatedScore = updateScore.scoreGame();
+						//Score updateScore = new Score(numWrongGuesses, currentWord.length());
+						//updatedScore = updateScore.scoreGame(currentWord, numWrongGuesses);
 
-						scoreTracking.setText("Current Score: " + updatedScore);
+					 // scoreTracking.setText("Current Score: " + updatedScore);
 						numTriesTracking.setText("Wrong Guesses: " + numWrongGuesses);
 						overallFrame.setVisible(true);
 						currentButton.setEnabled(false);
@@ -191,6 +244,10 @@ public class UI {
 							changeImage(true);
 						}
 
+					}
+					if (numWrongGuesses == NUMBER_OF_WRONG_GUESSES_ALLOWED) {
+						//updatedScore = 0;
+						//scoreTracking.setText("Current Score: " + updatedScore);
 					}
 				}
 			});
@@ -261,25 +318,127 @@ public class UI {
 
 	}
 
-	public void checkIfHighScore() {
-		HighScore highScore = new HighScore(playerName, currentScore);
-		EndGame endGame = new EndGame(highScore);
-		int scoreToBeat;
-		int numOfScores = EndGame.getScoreBoard().size();
+	
+	
+	public JPanel newGamePanel() {
+		JPanel endGamePanel = new JPanel();
+		JButton newGameButton = new JButton("New Game");
+		
+		newGameButton.addActionListener(new ActionListener() {
 
-		if (numOfScores < EndGame.numHighScoresToDisplay) {
-			scoreToBeat = 0;
-		} else {
-			scoreToBeat = EndGame.getScoreBoard().get(EndGame.numHighScoresToDisplay - 1).getScore();
-		}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				overallFrame.dispose();
+				initStartGameUI();
+			}
+			
+		
+			
+		});
+		
+		endGamePanel.add(newGameButton);
+		
+		return endGamePanel;
+	}
+	
+	
+	public JPanel getModePanels() {
 
-		if (currentScore > scoreToBeat) {
-			endGame.addToScoreAndSort();
-			endGame.displayScore();
-			endGame.writeToScoreTextFile();
+		JPanel modePanel = new JPanel(new SpringLayout());
+		JButton competitiveButton = new JButton("Competitive Mode");
+		JButton casualButton = new JButton("Casual Mode");
+		
+		//CC Added
+		casualButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				for (int i = 0; i < modePanel.getComponents().length; i++) {
+					modePanel.getComponent(i).setVisible(true);
+				}
+				categoryChosen = "";
+				casualButton.setEnabled(false);
+				competitiveButton.setEnabled(true);
+				
+			}
+		});
+		
+		competitiveButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				for (int i = 0; i < modePanel.getComponents().length; i++) {
+					
+					modePanel.getComponent(i).setEnabled(true);
+					
+				} 
+				
+				for (int i = 0; i < modePanel.getComponents().length; i++) {
+					if (modePanel.getComponent(i) instanceof JTextField) {
+						modePanel.getComponent(i).setVisible(false);
+					}
+				}
+				
+				competitiveButton.setVisible(true);
+				casualButton.setVisible(true);
+			
+				
+				competitiveButton.setEnabled(false);
+				categoryChosen = "Competitive";
+				noCatChosenMsg.setText("");
+				overallFrame.revalidate();
+				overallFrame.repaint();
+			}
+			
+		});
+		
+		modePanel.add(competitiveButton);
+		modePanel.add(casualButton);
+	
+		
+		String [] wordCategories = GuessWord.getPossibleCategories();
+		for (int i = 0; i < wordCategories.length; i++) {
+			JButton currentCatButton = new JButton(wordCategories[i]);
+			
+			currentCatButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					categoryChosen = currentCatButton.getText();
+				
+					for (int i = 0; i < modePanel.getComponents().length; i++) {
+						modePanel.getComponent(i).setEnabled(true);
+						casualButton.setEnabled(false);
+					} 
+					currentCatButton.setEnabled(false);
+					noCatChosenMsg.setText("");
+					overallFrame.revalidate();
+					overallFrame.repaint();
+					
+				}
+				
+			});
+
+			currentCatButton.setVisible(false);
+			modePanel.add(currentCatButton);
 		}
-		EndGame.displayCredits();
+		
+		SpringUtilities.makeGrid(modePanel, 3, 2, 0, 0, 0, 0);
+		
+		return modePanel;
 
 	}
 
+	public int getNumWrongGuesses() {
+		return numWrongGuesses;
+	}
+
+	public int getCurrentScore() {
+		return currentScore;
+	}
+	
+	
+	
 }

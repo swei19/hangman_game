@@ -1,1 +1,8 @@
-Spencer 3
+Random 200
+C 0
+C 0
+C 0
+C 0
+C 0
+C 0
+C 0
