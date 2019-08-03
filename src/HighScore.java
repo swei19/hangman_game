@@ -22,6 +22,10 @@ public class HighScore implements Comparable<Object>{
 		return score;
 	}
 	
+	
+	/**
+	 * Comparator to sort high score by score in descending order
+	 */
 
 	@Override
 	public int compareTo(Object o) {

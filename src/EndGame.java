@@ -27,7 +27,6 @@ public class EndGame {
 	 * initScoreList method which reads in a a text file containing previous high
 	 * scores.
 	 * 
-	 * 
 	 * @param highScore
 	 */
 

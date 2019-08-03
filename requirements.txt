@@ -14,3 +14,9 @@ Things to D0
 
 6) Progression? 1 Easy -> 1 medium -> hard -> loop hard words
 7) Code Cleanup
+8) Summary text file - 1 page - this should contain the name and description of your project (4-5 sentences), 
+	the actual work breakdown (who did what), and the link to your github repository
+9) Read me text file - describes how to run and use your program 
+	(the different functionality, the various options, etc.). Please feel free to liberally use
+	screenshots to describe functionality
+10) "The man has been hanged" bug

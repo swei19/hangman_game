@@ -22,9 +22,12 @@ public class GuessWord {
 	private Set<String> uniqueLettersOfSelectedWord;
 
 	/**
-	 * Based on the category chosen by the player, this class is responsible for
-	 * looping loop through the relevant .txt file using the index obtained and
-	 * adding those words to the wordsOfCategory ArrayLists
+	 * Based on the category chosen by the player and in casual mode, this class is
+	 * responsible for looping loop through the relevant .txt file adding those
+	 * words to the wordsOfCategory ArrayLists
+	 * 
+	 * If competitive mode is selected, every word from every category will be added
+	 * to wordsOfCategory ArrayList and a random word from this ArrayList will be selected
 	 * 
 	 * @param categoryChosen category of words that will be chosen by player
 	 */
@@ -40,9 +43,6 @@ public class GuessWord {
 				initWordList(currentPathToTextFile);
 			}
 		} else {
-			// int indexOfChosenCategory =
-			// Arrays.asList(possibleCategories).indexOf(categoryChosen);
-			// String chosenCategory = possibleCategories[indexOfChosenCategory];
 			currentPathToTextFile = Paths.get("wordLists\\" + categoryChosen + ".txt").toString();
 			initWordList(currentPathToTextFile);
 		}
@@ -85,8 +85,6 @@ public class GuessWord {
 
 		return selectedWord;
 	}
-
-
 
 	public static int getNumPossibleCategories() {
 		return numPossibleCategories;

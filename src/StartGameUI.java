@@ -155,6 +155,8 @@ public class StartGameUI {
 				for (int i = 0; i < modePanel.getComponents().length; i++) {
 					modePanel.getComponent(i).setVisible(true);
 				}
+				
+				casualButton.setEnabled(false);
 				categoryChosen = "";
 
 				competitiveButton.setEnabled(true);
@@ -174,9 +176,7 @@ public class StartGameUI {
 				}
 
 				for (int i = 0; i < modePanel.getComponents().length; i++) {
-					if (modePanel.getComponent(i) instanceof JTextField) {
-						modePanel.getComponent(i).setVisible(false);
-					}
+					modePanel.getComponent(i).setVisible(false);
 				}
 
 				competitiveButton.setVisible(true);
