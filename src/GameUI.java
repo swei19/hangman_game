@@ -68,23 +68,17 @@ public class GameUI {
 	public void initMainUI() {
 
 		GuessWord gw = new GuessWord(categoryChosen);
-
 		BorderLayout frameLayout = new BorderLayout();
 
 		currentWord = gw.selectWord();
 
-		// int carryOnScore, boolean isCompetitive, int numWrongGuessee;
 		if (categoryChosen == "Competitive") {
-			System.out.println("1:" + currentScore);
 			previousScore = currentScore;
 			score = new Score(true);
 		} else {
 			score = new Score(false);
 			previousScore = 0;
 		}
-
-		// currentScore = score.scoreGame(currentWord, numWrongGuesses, guessedLetters)
-		// + previousScore;
 
 		Display display = new Display(currentWord);
 		Set<String> uniqueLettersOfCurrentWord = gw.getUniqueLettersOfSelectedWord();
@@ -111,7 +105,6 @@ public class GameUI {
 		trackingPanel.add(newGamePanel());
 		overallFrame.add(trackingPanel, BorderLayout.NORTH);
 		overallFrame.add(hangmanPanel, BorderLayout.CENTER);
-		// overallFrame.add(newGamePanel(), BorderLayout.EAST);
 
 		JPanel buttonAndGuessWordPanel = new JPanel(new GridBagLayout());
 		JPanel topButtonsPanel = new JPanel(new SpringLayout());
@@ -126,7 +119,6 @@ public class GameUI {
 		for (int i = 0; i < 26; i++) {
 
 			String currentLetter = Character.toString((char) (i + 65));
-
 			JButton currentButton = new JButton(currentLetter);
 			currentButton.addActionListener(new ActionListener() {
 
@@ -141,7 +133,6 @@ public class GameUI {
 
 						if (!uniqueLettersOfCurrentWord.contains(currentButton.getText())) {
 							numWrongGuesses += 1;
-							System.out.println("Wrong Guesses: " + numWrongGuesses);
 
 							changeImage(false);
 						}
@@ -218,7 +209,9 @@ public class GameUI {
 		overallFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		overallFrame.setSize(620, 520);
 		overallFrame.setVisible(true);
+		overallFrame.setResizable(false);
 		overallFrame.requestFocusInWindow();
+		overallFrame.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -228,6 +221,7 @@ public class GameUI {
 	 * @return returns true if the set of guessed letters contains all the unique
 	 *         letters of the guess word returns false otherwise
 	 */
+	
 	public boolean gameIsWon(Set<String> uniqueLettersOfSelectedWord) {
 
 		for (String uniqueLetters : uniqueLettersOfSelectedWord) {
@@ -246,6 +240,7 @@ public class GameUI {
 	 * @param gameIsWon boolean that is true if all the letters of the word are
 	 *                  guessed before the number of tries is exceeded
 	 */
+	
 	public void changeImage(boolean gameIsWon) {
 		overallFrame.remove(hangmanPanel);
 		overallFrame.revalidate();
@@ -257,17 +252,7 @@ public class GameUI {
 			hangmanPanel = hm.readImage(numWrongGuesses, true);
 
 			trackingPanel.add(wonMessage);
-		} else if (numWrongGuesses == NUMBER_OF_WRONG_GUESSES_ALLOWED) {
-
-			JLabel loseMessage = new JLabel("The man has been hanged :'(");
-
-			hangmanPanel = hm.readImage(numWrongGuesses, false);
-			overallFrame.add(hangmanPanel);
-			overallFrame.revalidate();
-			trackingPanel.add(loseMessage);
-		}
-
-		else {
+		} else {
 			hangmanPanel = hm.readImage(numWrongGuesses, false);
 		}
 
@@ -348,11 +333,7 @@ public class GameUI {
 						reinit();
 						GameUI newGameUI = new GameUI(playerName, categoryChosen, overallFrame);
 						newGameUI.currentScore = previousGameScore;
-						System.out.println("previous: " + previousGameScore);
 						newGameUI.initMainUI();
-						// Score updateScore = new Score(previousScore, true, numWrongGuesses);
-						// gameUI.currentScore = previousScore;
-
 					}
 				}
 			}

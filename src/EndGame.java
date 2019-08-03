@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,11 +60,13 @@ public class EndGame {
 				String[] currentScoreEntry = currentScoreLine.split(" ");
 				String playerName;
 				int playerScore;
-
+				
 				if (currentScoreEntry.length > 2) {
 					playerName = String.join(" ",
-							Arrays.copyOfRange(currentScoreEntry, 0, currentScoreEntry.length - 2));
+							Arrays.copyOfRange(currentScoreEntry, 0, currentScoreEntry.length - 1));
+					
 					playerScore = Integer.parseInt(currentScoreEntry[currentScoreEntry.length - 1]);
+					
 				} else {
 					playerName = currentScoreEntry[0];
 					playerScore = Integer.parseInt(currentScoreEntry[1]);
@@ -119,9 +122,18 @@ public class EndGame {
 
 			}
 
-			JLabel currentScore = new JLabel(labelText);
-
-			scorePanel.add(currentScore);
+			
+			JLabel currentScoreLabel;
+			
+			if (currentHighScore.equals(currentScore)){
+				
+				
+				
+				currentScoreLabel = new JLabel("<html><span bgcolor='white'>" + labelText + "</span></html>");
+			} else {
+				currentScoreLabel = new JLabel(labelText);
+			}
+			scorePanel.add(currentScoreLabel);
 
 			if (i == NUM_HIGH_SCORES_TO_DISPLAY - 1) {
 				break;
@@ -172,5 +184,5 @@ public class EndGame {
 	public static ArrayList<HighScore> getScoreBoard() {
 		return scoreBoard;
 	}
-
+		
 }

@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 /**
  * @author Calvin Chan, Denes Marton, Spencer Wei This class will be responsible
- *         for displaying any graphics of the game.
+ *         for displaying the letters of a word if it is guessed correctly and a 
+ *         empty underline if the letter has not been guessed yet
  */
 
 public class Display {

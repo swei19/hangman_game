@@ -24,7 +24,7 @@ public class StartGameUI {
 	final static int NUMBER_OF_WRONG_GUESSES_ALLOWED = 6;
 	private JFrame overallFrame;
 	private JLabel headerLabel;
-	private JLabel noCatChosenMsg = new JLabel("");
+	private JLabel playerErrorMsg = new JLabel("");
 	private JTextField nameField;
 
 	private String playerName = "";
@@ -40,6 +40,8 @@ public class StartGameUI {
 		overallFrame.add(getStartGamePanel());
 		overallFrame.setVisible(true);
 		overallFrame.requestFocusInWindow();
+		overallFrame.setResizable(false);
+		overallFrame.setLocationRelativeTo(null);
 	}
 
 	/**
@@ -63,7 +65,7 @@ public class StartGameUI {
 
 		c.gridy = 1;
 		c.anchor = GridBagConstraints.CENTER;
-		c.insets = new Insets(10, 0, 0, 0);
+		c.insets = new Insets(-10, 0, 0, 0);
 		nameField.setMargin(new Insets(5, 5, 5, 5));
 
 		startGamePanel.add(nameField, c);
@@ -75,9 +77,11 @@ public class StartGameUI {
 
 		c.gridy = 0;
 		c.anchor = GridBagConstraints.CENTER;
-		c.insets = new Insets(10, 0, 0, 0);
+		c.insets = new Insets(-80, 0, 0, 0);
 		headerLabel = new JLabel("Hangman Game");
+		headerLabel.setFont (headerLabel.getFont ().deriveFont (32f));
 		startGamePanel.add(headerLabel, c);
+		
 
 		c.weightx = 0;
 		c.weighty = 0;
@@ -94,6 +98,10 @@ public class StartGameUI {
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				nameField.setText("");
+				/*if (nameField.getText() == "Please enter a name") {
+					nameField.setText("");
+				}*/
+				
 			}
 
 			@Override
@@ -110,22 +118,26 @@ public class StartGameUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				playerName = nameField.getText();
-				if (categoryChosen != "") {
-
+				
+				c.gridy = 4;
+				c.insets = new Insets(10, 0, 0, 0);
+				c.gridwidth = 1;
+				c.anchor = GridBagConstraints.SOUTH;
+				
+				if (nameField.getText().equals("Please enter a name") || nameField.getText().length() == 0) {
+					playerErrorMsg.setText("Please enter a name");
+					startGamePanel.add(playerErrorMsg, c);
+					startGamePanel.revalidate();
+				} 
+				
+				else if (categoryChosen != "") {
+					
 					GameUI mainUI = new GameUI(playerName, categoryChosen, overallFrame);
 					mainUI.initMainUI();
 				} else {
-
-					c.gridy = 4;
-					c.insets = new Insets(0, 0, 0, 0);
-					c.gridwidth = 1;
-					c.anchor = GridBagConstraints.SOUTH;
-
-					if (noCatChosenMsg.getText() == "") {
-						noCatChosenMsg.setText("Please select a category first");
-						startGamePanel.add(noCatChosenMsg, c);
-						startGamePanel.revalidate();
-					}
+					playerErrorMsg.setText("Please select a category first");
+					startGamePanel.add(playerErrorMsg, c);
+					startGamePanel.revalidate();
 				}
 			}
 		});
@@ -175,18 +187,27 @@ public class StartGameUI {
 
 				}
 
+				nameField.setFocusable(false);
+				
 				for (int i = 0; i < modePanel.getComponents().length; i++) {
+					
 					modePanel.getComponent(i).setVisible(false);
 				}
 
+				nameField.setFocusable(true);
+				
 				competitiveButton.setVisible(true);
 				casualButton.setVisible(true);
+				
 
 				competitiveButton.setEnabled(false);
 				categoryChosen = "Competitive";
-				noCatChosenMsg.setText("");
+				
+		
+				playerErrorMsg.setText("");
 				overallFrame.revalidate();
 				overallFrame.repaint();
+				
 			}
 
 		});
@@ -208,7 +229,7 @@ public class StartGameUI {
 						casualButton.setEnabled(false);
 					}
 					currentCatButton.setEnabled(false);
-					noCatChosenMsg.setText("");
+					playerErrorMsg.setText("");
 					overallFrame.revalidate();
 					overallFrame.repaint();
 

@@ -1,10 +1,10 @@
-Garfield 10
-Test1 4
-Test2 2
-Test7 2
-Test9 2
-Test3 1
-Test4 1
-Test8 1
-odie 1
-Test5 0
+Thanos 50
+The Hulk 45
+Wonder Woman 40
+GLaDOS 30
+Link 30
+Snake 25
+Mario 20
+Tom Brady 20
+Bugs Bunny 10
+Hangman Enthusiast 5

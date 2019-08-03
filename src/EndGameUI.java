@@ -33,6 +33,8 @@ public class EndGameUI {
 		endGameFrame.setSize(620, 520);
 		endGameFrame.setVisible(true);
 		endGameFrame.requestFocusInWindow();
+		endGameFrame.setResizable(false);
+		endGameFrame.setLocationRelativeTo(null);
 
 		this.playerName = playerName;
 		this.playerScore = playerScore;

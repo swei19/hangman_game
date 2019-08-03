@@ -53,7 +53,7 @@ public class Hangman {
 			JLabel currentImage = new JLabel(new ImageIcon(hangmanImages));
 			imagePanel.add(currentImage);
 		} catch (IOException e) {
-			System.out.println(f.getAbsolutePath());
+			System.out.println("Image not found: " + f.getAbsolutePath());
 		}
 		return imagePanel;
 	}

@@ -20,3 +20,10 @@ Things to D0
 	(the different functionality, the various options, etc.). Please feel free to liberally use
 	screenshots to describe functionality
 10) "The man has been hanged" bug
+
+
+1) Remove man has been hanged message
+2) Make not resizeable
+3) Add more words
+4) Prefill highscore.txt file?
+

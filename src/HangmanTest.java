@@ -37,18 +37,17 @@ class HangmanTest {
 					wordsOfCategory.add(s.next().toLowerCase());
 				}
 				wordsExpected.put(category, wordsOfCategory);
+				s.close();
 			} catch (FileNotFoundException e) {
 				System.out.println("File not found, please ensure the " + category + ".txt file is located"
 									+ "in at " + pathToFile.toString());
 			}
 		}
+		
 		String gwAnimals = new GuessWord("Animals").selectWord().toLowerCase();
 		String gwCountries = new GuessWord("Countries").selectWord().toLowerCase();
 		String gwFood = new GuessWord("Food").selectWord().toLowerCase();
 		String gwPlaces = new GuessWord("Places").selectWord().toLowerCase();
-
-		System.out.println("Country " + gwCountries);
-		System.out.println("Expected " + wordsExpected.get("Countries"));
 		
 		assertTrue(wordsExpected.get("Animals").contains(gwAnimals));
 		assertTrue(wordsExpected.get("Countries").contains(gwCountries));
@@ -73,6 +72,7 @@ class HangmanTest {
 				while (s.hasNext()) {
 					wordsExpected.add(s.next().toLowerCase());
 				}
+				s.close();
 			} catch (FileNotFoundException e) {
 				System.out.println("File not found, please ensure the " + category + ".txt file is located"
 									+ "in at " + pathToFile.toString());
@@ -154,7 +154,8 @@ class HangmanTest {
 	  
 	  /**
 	   * This tests that even if somehow the number of wrong guesses exceeds
-	   * the limit set in the game, an image is still displayed 
+	   * the limit set in the game, an error message is displayed in the console 
+	   * and the "lose" image will be displayed instead
 	   */
 	  @Test 
 	  void testHangMan2() { 
@@ -168,10 +169,8 @@ class HangmanTest {
 	   */
 	  @Test 
 	  void testHangMan3() { 
-		  JFrame overallFrame = new JFrame();
-		  GameUI gameUI = new GameUI("playerName", "Animals", overallFrame);
 		  Hangman hm = new Hangman();
-		  hm.readImage(gameUI.NUMBER_OF_WRONG_GUESSES_ALLOWED, false);
+		  hm.readImage(GameUI.NUMBER_OF_WRONG_GUESSES_ALLOWED, false);
 		  assertEquals("\\Lose.png", hm.getFileName()); 
 	  }
 	  
