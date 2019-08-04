@@ -1,0 +1,32 @@
+Description
+============
+Hangman is a game where a word is randomly selected and the player will then need to guess that word. 
+The word that the player has to guess is at first, displayed with empty word underlines (one for each letter of the word) and the player is then allowed to guess one letter one at a time. 
+Each time the player guesses a letter correctly, the empty underline containing that letter will be displayed in place. 
+If the player guesses incorrectly, a body part of a person is is drawn or bolded. After 6 unsuccessful attempts, the player loses and an image showing the person being “hung” is displayed.
+In our version of the game, we introduced two modes. The casual mode, where the word the player has to guess is drawn by the category chosen by the player. 
+There is also a competitive mode, where the game randomly decide a word from any category. 
+In casual mode, the game ends after one round, when either the player successfully guessed the word or loses (after 6 unsuccessful guesses). 
+
+The player is then given a score based on the letters the player guessed correctly.
+In competitive however, the game will continue after winning or losing to the next round, and each time, a different word is randomly selected for the user to guess. 
+The score from previous rounds will carry forward, and the game will continue until the player loses a round. 
+Afterwards, the player will be entered into a high score board, if the player’s score is high enough.
+
+Work Breakdown
+==============
+
+In certain weeks, the work is divided such that each member of our team is given the responsibility to take a lead on certain classes. 
+However, we have all worked closely to work on each class and we have all contributed equally.
+Each of us however have made significant contributions to certain classes. They are as follows:
+
+Calvin: Score, StartGameUI, Hangman, HangmanTest
+Spencer: Display, GameUI, GuessWord, EndGame
+Denes: EndGameUI, HighScore
+
+Calvin was also responsible for creating the README file, while Spencer was mostly responsible for managing the team’s github and creating the summary file.
+
+Github 
+======
+Please find the link to our project as follows:
+https://github.com/cit-591/final-project-summer-2019-calvin-denes-spencer

@@ -6,5 +6,5 @@ Link 30
 Snake 25
 Mario 20
 Tom Brady 20
+Spencer 13
 Bugs Bunny 10
-Hangman Enthusiast 5

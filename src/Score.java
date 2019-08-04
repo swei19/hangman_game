@@ -20,12 +20,8 @@ public class Score {
 	 */
 	public Score(boolean isCompetitive) {
 		this.isCompetitive = isCompetitive;
-
-		// this.guessWordLength = guessWordLength;
-		// this.numWrongTries = numWrongTries;
 	}
 
-	// GameUI gUI = new GameUI();
 
 	/**
 	 * This method determines the player's score based on the unique letters of the word and 

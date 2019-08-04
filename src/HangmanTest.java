@@ -24,7 +24,7 @@ class HangmanTest {
 	 */
 
 	@Test
-	void testGuessWord1() {	
+	void testGuessWordReturnsExpected() {	
 		HashMap<String, ArrayList<String>> wordsExpected = new HashMap<String, ArrayList<String>>();
 		String[] wordCategories = {"Animals", "Countries", "Food", "Places"};
 		
@@ -60,7 +60,7 @@ class HangmanTest {
 	 * categories 
 	 */
 	@Test
-	void testGuessWord2() {
+	void testGuessWordCompetitiveMode() {
 		
 		ArrayList<String> wordsExpected = new ArrayList<String>();
 		String[] wordCategories = {"Animals", "Countries", "Food", "Places"};
@@ -88,7 +88,7 @@ class HangmanTest {
 	 * Test that the scoreGame method returns the correct max score
 	 */
 	 @Test
-	 void testScoreGame1() { 
+	 void testScoreReturnsMaxScore() { 
 		 Score score = new Score(true);
 		 ArrayList<String> guessedLetters = new ArrayList<>();
 		 guessedLetters.add("z");
@@ -108,7 +108,7 @@ class HangmanTest {
 	 */
 
 	  @Test 
-	  void testScoreGame2() { 
+	  void testScoreReturnZero() { 
 		  Score score = new Score(true); 
 		  ArrayList<String> guessedLetters = new ArrayList<>();
 		  guessedLetters.add("k");
@@ -122,7 +122,7 @@ class HangmanTest {
 	   * is 2-5 = -3 but if it is negative, we return a score of 0.
 	   */
 	  @Test 
-	  void testScoreGame3() { 
+	  void testScoreNegativeScore() { 
 		  Score score = new Score(true);
 		  ArrayList<String> guessedLetters = new ArrayList<>();
 		  guessedLetters.add("g");
@@ -136,7 +136,7 @@ class HangmanTest {
 	   */
 	  
 	  @Test 
-	  void testScoreGame4() { 
+	  void testScoreMultipleDuplicateLetters() { 
 		  Score score = new Score(false); 
 		  ArrayList<String> guessedLetters = new ArrayList<>();
 		  guessedLetters.add("z");
@@ -147,7 +147,7 @@ class HangmanTest {
 	   * This tests if the JPanel that displays the man is null. Should not be null
 	   */
 	  @Test 
-	  void testHangMan1() { 
+	  void testHangManNullImage() { 
 		  Hangman hm = new Hangman();
 		  assertNotNull(hm.readImage(0, false), "This should not be null"); 
 	  }
@@ -158,7 +158,7 @@ class HangmanTest {
 	   * and the "lose" image will be displayed instead
 	   */
 	  @Test 
-	  void testHangMan2() { 
+	  void testHangManLoseImage1() { 
 		  Hangman hm = new Hangman();
 		  assertNotNull(hm.readImage(7, false), "This should not be null"); 
 	  }
@@ -168,7 +168,7 @@ class HangmanTest {
 	   * the number of wrong guesses allowed, it displays the lose message
 	   */
 	  @Test 
-	  void testHangMan3() { 
+	  void testHangManLoseImage2() { 
 		  Hangman hm = new Hangman();
 		  hm.readImage(GameUI.NUMBER_OF_WRONG_GUESSES_ALLOWED, false);
 		  assertEquals("\\Lose.png", hm.getFileName()); 
@@ -179,7 +179,7 @@ class HangmanTest {
 	   * wrong guesses
 	   */
 	  @Test 
-	  void testHangMan4() { 
+	  void testHangManReturnsCorrectImage() { 
 		  JFrame overallFrame = new JFrame();
 		  GameUI gameUI = new GameUI("playerName", "Animals", overallFrame);
 		  Hangman hm = new Hangman();
@@ -193,7 +193,7 @@ class HangmanTest {
 	   * that aren't in the guessword, then the game is won
 	   */
 	  @Test 
-	  void testGameIsWon1() { 
+	  void testGameIsWon() { 
 		  JFrame overallFrame = new JFrame();
 		  GameUI gameUI = new GameUI("playerName", "Animals", overallFrame);
 		  ArrayList<String> guessedLetters = new ArrayList<>();
@@ -217,7 +217,7 @@ class HangmanTest {
 	   * gameIsWon is false
 	   */
 	  @Test 
-	  void testGameIsWon2() { 
+	  void testGameIsNotWin() { 
 		  JFrame overallFrame = new JFrame();
 		  GameUI gameUI = new GameUI("playerName", "Animals", overallFrame);
 		  ArrayList<String> guessedLetters = new ArrayList<>();
@@ -238,7 +238,7 @@ class HangmanTest {
 	   * that gameIsWon still shows false
 	   */
 	  @Test 
-	  void testGameIsWon3() { 
+	  void testGameIsNotWonWithNoGuesses() { 
 		  JFrame overallFrame = new JFrame();
 		  GameUI gameUI = new GameUI("playerName", "Places", overallFrame);
 		  ArrayList<String> guessedLetters = new ArrayList<>();
@@ -257,7 +257,7 @@ class HangmanTest {
 	   * will appear
 	   */
 	  @Test 
-	  void startGameUI1() { 
+	  void startGameUIAppears() { 
 		  StartGameUI startGameUI = new StartGameUI();
 		  assertNotNull(startGameUI.getStartGamePanel());
 	  }

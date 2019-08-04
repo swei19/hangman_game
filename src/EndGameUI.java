@@ -120,13 +120,4 @@ public class EndGameUI {
 
 	}
 
-	/*
-	 * public static void main(String[] args) { endGameFrame = new
-	 * JFrame("Hangman");
-	 * endGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 * endGameFrame.setSize(620, 520); EndGameUI eg = new EndGameUI("Random", 0);
-	 * eg.displayBoard(); endGameFrame.setVisible(true);
-	 * endGameFrame.requestFocusInWindow(); }
-	 */
-
 }

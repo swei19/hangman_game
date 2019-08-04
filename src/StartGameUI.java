@@ -98,10 +98,6 @@ public class StartGameUI {
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				nameField.setText("");
-				/*if (nameField.getText() == "Please enter a name") {
-					nameField.setText("");
-				}*/
-				
 			}
 
 			@Override
